@@ -4,7 +4,7 @@ use std::process::Command;
 
 #[derive(Parser)]
 #[clap(
-    version = "0.1.2",
+    version = "0.1.3",
     author = "HormigaDev <hormigadev7@gmail.com>",
     about = "Una herramienta CLI para gestionar y ejecutar comandos predefinidos desde archivos de configuración"
 )]
@@ -15,7 +15,7 @@ struct Cli {
 fn main() {
     let args = Cli::parse();
     let cmd_file = "cmd.ini";
-    let content = fs::read_to_string(cmd_file).expect("Cannot read file .cmd");
+    let content = fs::read_to_string(cmd_file).expect("Cannot read file cmd.ini");
 
     let commands: std::collections::HashMap<_, _> = content
         .lines()
