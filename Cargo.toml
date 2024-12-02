@@ -11,7 +11,7 @@ repository = "https://github.com/HormigaDev/r-py"
 documentation = "https://docs.rs/r-py"
 readme = "README.md"
 license = "MIT"
-keywords = ["CLI", "Rust", "automation", "configuration", "commands", "scripts"]
+keywords = ["CLI",  "automation", "configuration", "commands", "scripts"]
 categories = ["command-line-utilities"]
 
 [dependencies]
