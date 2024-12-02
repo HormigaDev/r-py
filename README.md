@@ -6,7 +6,7 @@ Con `r-py`, puedes definir comandos predefinidos en un archivo de configuración
 
 ### ¿Cómo funciona?
 
-Al definir tus comandos en el archivo de configuración bajo la clave `scripts`, puedes crear alias para ejecutar tareas frecuentes. Por ejemplo, en lugar de escribir el largo comando:
+Al definir tus comandos en el archivo de configuración `cmd.ini` al nivel del archivo binario (o sea donde se está ejecutando el CLI), puedes crear alias para ejecutar tareas frecuentes. Por ejemplo, en lugar de escribir el largo comando:
 
 ```bash
 uvicorn app.main:app --reload
@@ -14,7 +14,9 @@ uvicorn app.main:app --reload
 
 Puedes simplemente ejecutar:
 
-> r-py start
+```bash
+r-py start
+```
 
 ### Ventajas
 
