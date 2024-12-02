@@ -1,0 +1,18 @@
+[package]
+name = "r-py"
+version = "0.1.0"
+edition = "2021"
+
+# La metadata para crates.io
+authors = ["HormigaDev <hormigadev7@gmail.com>"]
+description = "Una herramienta CLI para gestionar y ejecutar comandos predefinidos desde archivos de configuración"
+homepage = "https://github.com/HormigaDev/r-py"
+repository = "https://github.com/HormigaDev/r-py"
+documentation = "https://docs.rs/r-py"
+readme = "README.md"
+license = "MIT"
+keywords = ["CLI", "Rust", "automation", "configuration", "commands", "scripts"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+clap = { version = "4.0", features = ["derive"] }
