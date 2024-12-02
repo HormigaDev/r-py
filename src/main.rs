@@ -3,6 +3,11 @@ use std::fs;
 use std::process::Command;
 
 #[derive(Parser)]
+#[clap(
+    version = "0.1.2",
+    author = "HormigaDev <hormigadev7@gmail.com>",
+    about = "Una herramienta CLI para gestionar y ejecutar comandos predefinidos desde archivos de configuración"
+)]
 struct Cli {
     key: String,
 }
