@@ -4,7 +4,7 @@ use std::process::Command;
 
 #[derive(Parser)]
 #[clap(
-    version = "0.1.3",
+    version = "0.1.4",
     author = "HormigaDev <hormigadev7@gmail.com>",
     about = "Una herramienta CLI para gestionar y ejecutar comandos predefinidos desde archivos de configuración"
 )]
@@ -31,19 +31,30 @@ fn main() {
     if let Some(command) = commands.get(&args.key) {
         println!("Executing: {}", command);
 
-        let mut cmd_parts = command.split_whitespace();
-        let program = cmd_parts.next().expect("Command is void!");
-        let args: Vec<&str> = cmd_parts.collect();
+        // Detectamos el sistema operativo
+        let shell = if cfg!(target_os = "windows") {
+            "cmd"
+        } else {
+            "sh"
+        };
 
-        let status = Command::new(program)
-            .args(&args)
+        // Dependiendo del SO, el comando es diferente
+        let shell_arg = if cfg!(target_os = "windows") {
+            "/C"
+        } else {
+            "-c"
+        };
+
+        let status = Command::new(shell)
+            .arg(shell_arg)
+            .arg(command)
             .status()
             .expect("Error executing command!");
 
         if status.success() {
-            println!("Command is executed sucessfully!");
+            println!("Command executed successfully!");
         } else {
-            eprintln!("Command fail!");
+            eprintln!("Command failed!");
         }
     } else {
         eprintln!("Key '{}' is not present in the file .cmd", args.key);
