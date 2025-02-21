@@ -19,11 +19,11 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     #[clap(
-        about = "Installs packages using pip. If no package is specified, it installs from requirements.txt."
+        about = "Installs packages using pip. If no packages are specified, it installs from requirements.txt."
     )]
     Install {
         #[clap(required = false)]
-        package: Option<String>,
+        packages: Option<Vec<String>>,
     },
 
     #[clap(
@@ -44,8 +44,8 @@ fn main() {
     let args = Cli::parse();
 
     match args.command {
-        Some(Commands::Install { package }) => {
-            commands::install(package);
+        Some(Commands::Install { packages }) => {
+            commands::install(packages);
         }
         Some(Commands::Init) => {
             commands::initialize_project();
