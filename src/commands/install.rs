@@ -1,0 +1,40 @@
+use std::fs;
+use std::process::Command;
+
+pub fn install(package: Option<String>) {
+    if let Some(pkg) = package {
+        println!("Installing package: {}", pkg);
+        let status = Command::new("pip")
+            .arg("install")
+            .arg(&pkg)
+            .status()
+            .expect("Error executing pip install");
+
+        if status.success() {
+            println!("Package {} installed successfully!", pkg);
+        } else {
+            eprintln!("Failed to install package {}", pkg);
+        }
+    } else {
+        let req_file = "requirements.txt";
+        if fs::metadata(req_file).is_ok() {
+            println!("Installing from requirements.txt...");
+            let status = Command::new("pip")
+                .arg("install")
+                .arg("-r")
+                .arg(req_file)
+                .status()
+                .expect("Error executing pip install -r");
+
+            if status.success() {
+                println!("Packages installed successfully from requirements.txt!");
+            } else {
+                eprintln!("Failed to install packages from requirements.txt");
+            }
+        } else {
+            println!("No requirements.txt found. Creating one...");
+            fs::File::create(req_file).expect("Failed to create requirements.txt");
+            println!("requirements.txt created. You can add packages to it.");
+        }
+    }
+}

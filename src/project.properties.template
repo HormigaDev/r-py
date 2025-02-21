@@ -1,0 +1,9 @@
+[project]
+name=NAME
+version=VERSION
+author=
+license=UNLICENSED
+
+[commands]
+dev=PYTHONDONTWRITEBYTECODE=1 python main.py
+start=python main.py

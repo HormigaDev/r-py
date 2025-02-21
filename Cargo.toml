@@ -1,6 +1,6 @@
 [package]
 name = "r-py"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 
 # La metadata para crates.io
@@ -16,3 +16,7 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 clap = { version = "4.0", features = ["derive"] }
+
+[[bin]]
+name = "rpy"
+path = "src/main.rs"
