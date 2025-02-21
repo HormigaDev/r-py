@@ -15,7 +15,7 @@ uvicorn app.main:app --reload
 Puedes simplemente ejecutar:
 
 ```bash
-r-py start
+rpy start
 ```
 
 ### Ventajas
@@ -24,9 +24,19 @@ r-py start
 
 -   **Personalización**: Puedes fácilmente modificar el comportamiento de tus comandos mediante la configuración de los alias.
 
--   **Automatización**: Organiza tus tareas en un solo archivo y ejecútalas con una simple llamada a `r-py <alias>`.
+-   **Automatización**: Organiza tus tareas en un solo archivo y ejecútalas con una simple llamada a `rpy <alias>`.
 
--   **Versatilidad**: `r-py` se adapta a cualquier proyecto Python, permitiéndote gestionar múltiples scripts de forma eficiente.
+-   **Versatilidad**: `rpy` se adapta a cualquier proyecto Python, permitiéndote gestionar múltiples scripts de forma eficiente.
+
+### Comandos predeterminados
+
+El binario de `rpy` incluye de forma predeterminada los siguientes comandos:
+
+-   **install [paquete]**: Instala las dependencias de Python. Si no se proporciona un paquete específico (ejemplo: `r-py install discord.py`), se instalarán todas las dependencias listadas en `requirements.txt`.
+
+-   **init**: Inicializa un proyecto básico de Python en el directorio actual, creando los archivos esenciales.
+
+-   **new <nombre>**: Crea un nuevo proyecto con el nombre especificado, generando una estructura de archivos inicial.
 
 ### Ejemplo de uso
 
@@ -41,12 +51,14 @@ test=pytest
 2. **Ejecuta el comando deseado**:
 
 ```bash
-r-py start
+rpy start
 ```
 
 Esto ejecutara el comando `uvicorn app.main:app --reload`, de manera más concisa.
 
 ### Instalación
+
+> Puedes instalar este binario de forma rápida ejecutando `cargo install r-py`
 
 Para instalar y usar `r-py`, simplemente descarga el archivo binario en las versiones del repositorio o sigue estos pasos:
 

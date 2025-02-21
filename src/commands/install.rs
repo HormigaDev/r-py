@@ -1,4 +1,5 @@
 use std::fs;
+use std::io::Write;
 use std::process::Command;
 
 pub fn install(package: Option<String>) {
@@ -12,6 +13,33 @@ pub fn install(package: Option<String>) {
 
         if status.success() {
             println!("Package {} installed successfully!", pkg);
+
+            let output = Command::new("pip")
+                .arg("show")
+                .arg(&pkg)
+                .output()
+                .expect("Failed to get package info");
+
+            if output.status.success() {
+                let output_str = String::from_utf8_lossy(&output.stdout);
+                if let Some(version_line) =
+                    output_str.lines().find(|line| line.starts_with("Version:"))
+                {
+                    let version = version_line.replace("Version: ", "");
+                    let package_entry = format!("{}=={}\n", pkg, version);
+
+                    let req_file = "requirements.txt";
+                    let mut file = fs::OpenOptions::new()
+                        .create(true)
+                        .append(true)
+                        .open(req_file)
+                        .expect("Failed to open requirements.txt");
+                    file.write_all(package_entry.as_bytes())
+                        .expect("Failed to write to requirements.txt");
+
+                    println!("Added {} to requirements.txt", package_entry.trim());
+                }
+            }
         } else {
             eprintln!("Failed to install package {}", pkg);
         }
