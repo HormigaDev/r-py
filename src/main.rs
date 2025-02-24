@@ -14,6 +14,9 @@ mod commands;
 struct Cli {
     #[clap(subcommand)]
     command: Option<Commands>,
+
+    #[clap(name = "command")]
+    extra_commands: Vec<String>,
 }
 
 #[derive(Subcommand)]
@@ -57,20 +60,28 @@ fn main() {
             let cmd_file = "project.properties";
             match fs::read_to_string(cmd_file) {
                 Ok(content) => {
-                    let commands: HashMap<_, _> = content
-                        .lines()
-                        .filter_map(|line| {
-                            let mut parts = line.splitn(2, "=");
-                            Some((
-                                parts.next()?.trim().to_string(),
-                                parts.next()?.trim().to_string(),
-                            ))
-                        })
-                        .collect();
+                    let mut in_commands_section = false;
+                    let mut commands: HashMap<String, String> = HashMap::new();
 
-                    let command_key = std::env::args().nth(1);
+                    for line in content.lines() {
+                        if line.trim() == "[commands]" {
+                            in_commands_section = true;
+                        } else if in_commands_section && line.starts_with('[') {
+                            in_commands_section = false;
+                        }
+
+                        if in_commands_section && line.contains('=') {
+                            let mut parts = line.splitn(2, "=");
+                            if let (Some(key), Some(value)) = (parts.next(), parts.next()) {
+                                commands.insert(key.trim().to_string(), value.trim().to_string());
+                            }
+                        }
+                    }
+
+                    let command_key = args.extra_commands.get(0); // Obtenemos el primer argumento adicional
+
                     if let Some(command_key) = command_key {
-                        if let Some(command) = commands.get(&command_key) {
+                        if let Some(command) = commands.get(command_key) {
                             println!("Executing: {}", command);
 
                             let status = Command::new("sh")
