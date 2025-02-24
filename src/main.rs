@@ -7,7 +7,7 @@ mod commands;
 
 #[derive(Parser)]
 #[clap(
-    version = "0.1.6",
+    version = "0.1.7",
     author = "HormigaDev <hormigadev7@gmail.com>",
     about = "A CLI tool for managing and executing predefined commands from configuration files"
 )]
